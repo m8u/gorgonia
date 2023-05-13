@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"gorgonia.org/gorgonia"
+	"github.com/m8u/gorgonia"
 	"gorgonia.org/tensor"
 )
 

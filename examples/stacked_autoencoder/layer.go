@@ -2,8 +2,7 @@ package main
 
 import (
 	"fmt"
-
-	. "gorgonia.org/gorgonia"
+	. "github.com/m8u/gorgonia"
 )
 
 type ActivationFunction func(*Node) (*Node, error)

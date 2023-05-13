@@ -6,7 +6,7 @@ import (
 	"math/rand"
 	"runtime"
 
-	. "gorgonia.org/gorgonia"
+	. "github.com/m8u/gorgonia"
 	"gorgonia.org/tensor"
 )
 
@@ -113,7 +113,9 @@ func linearRegression(Float tensor.Dtype, iter int) (retM, retC Value) {
 // Linear Regression Example
 //
 // The formula for a straight line is
-//		y = mx + c
+//
+//	y = mx + c
+//
 // We want to find an `m` and a `c` that fits the equation well. We'll do it in both float32 and float64 to showcase the extensibility of Gorgonia
 func Example_linearRegression() {
 	var m, c Value

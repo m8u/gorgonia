@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"gorgonia.org/gorgonia"
+	"github.com/m8u/gorgonia"
 )
 
 func ExampleMarshal() {

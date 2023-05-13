@@ -10,7 +10,7 @@ import (
 	"strconv"
 	"strings"
 
-	"gorgonia.org/gorgonia"
+	"github.com/m8u/gorgonia"
 	"gorgonia.org/tensor"
 )
 

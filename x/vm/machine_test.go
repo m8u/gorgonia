@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	"gorgonia.org/gorgonia"
+	"github.com/m8u/gorgonia"
 )
 
 func TestMachine_runAllNodes(t *testing.T) {

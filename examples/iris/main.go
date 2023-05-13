@@ -9,13 +9,12 @@ import (
 
 	"github.com/go-gota/gota/dataframe"
 	"github.com/go-gota/gota/series"
+	"github.com/m8u/gorgonia"
 	"gonum.org/v1/gonum/mat"
-	"gorgonia.org/gorgonia"
 	"gorgonia.org/tensor"
 )
 
 // https://www.kaggle.com/amarpandey/implementing-linear-regression-on-iris-dataset/notebook
-//
 func main() {
 	g := gorgonia.NewGraph()
 	x, y := getXYMat()

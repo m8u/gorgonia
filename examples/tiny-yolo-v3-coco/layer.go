@@ -1,6 +1,6 @@
 package main
 
-import "gorgonia.org/gorgonia"
+import "github.com/m8u/gorgonia"
 
 type layerN interface {
 	String() string

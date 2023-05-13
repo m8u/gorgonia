@@ -7,7 +7,7 @@ import (
 	"io/ioutil"
 
 	"github.com/chewxy/hm"
-	. "gorgonia.org/gorgonia"
+	. "github.com/m8u/gorgonia"
 	"gorgonia.org/tensor"
 )
 

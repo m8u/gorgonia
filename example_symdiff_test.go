@@ -2,9 +2,8 @@ package gorgonia_test
 
 import (
 	"fmt"
+	. "github.com/m8u/gorgonia"
 	"log"
-
-	. "gorgonia.org/gorgonia"
 )
 
 // SymbolicDiff showcases symbolic differentiation

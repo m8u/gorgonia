@@ -5,8 +5,8 @@ import (
 	"runtime"
 	"testing"
 
-	"gorgonia.org/gorgonia"
-	G "gorgonia.org/gorgonia"
+	"github.com/m8u/gorgonia"
+	G "github.com/m8u/gorgonia"
 	"gorgonia.org/tensor"
 )
 

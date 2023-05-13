@@ -2,8 +2,7 @@ package gorgonia_test
 
 import (
 	"fmt"
-
-	. "gorgonia.org/gorgonia"
+	. "github.com/m8u/gorgonia"
 )
 
 // This example showcases the reasons for the more confusing functions.

@@ -5,8 +5,8 @@ import (
 	"log"
 	"runtime"
 
-	"gorgonia.org/gorgonia"
-	nnops "gorgonia.org/gorgonia/ops/nn"
+	"github.com/m8u/gorgonia"
+	nnops "github.com/m8u/gorgonia/ops/nn"
 	"gorgonia.org/tensor"
 )
 

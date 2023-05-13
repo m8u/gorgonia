@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"gorgonia.org/gorgonia"
+	"github.com/m8u/gorgonia"
 )
 
 func Examplenode_Compute() {

@@ -1,10 +1,11 @@
+//go:build !native
 // +build !native
 
 package main
 
 import (
-	. "gorgonia.org/gorgonia"
-	"gorgonia.org/gorgonia/blase"
+	. "github.com/m8u/gorgonia"
+	"github.com/m8u/gorgonia/blase"
 )
 
 func init() {
