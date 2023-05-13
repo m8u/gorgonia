@@ -981,8 +981,8 @@ func (op *maxPoolDiffOp) Do(inputs ...Value) (Value, error) {
 
 	// out is the gradient of in
 	out = tensor.New(tensor.Of(in.Dtype()), tensor.WithShape(in.Shape().Clone()...), tensor.WithEngine(in.Engine()))
-	op.do(out, in, pooled, pooledGrad)
-	return out, nil
+	err = op.do(out, in, pooled, pooledGrad)
+	return out, err
 }
 func (op *maxPoolDiffOp) ReturnsPtr() bool     { return true }
 func (op *maxPoolDiffOp) CallsExtern() bool    { return false }
@@ -1008,8 +1008,8 @@ func (op *maxPoolDiffOp) UsePreallocDo(prealloc Value, inputs ...Value) (Value, 
 		return nil, err
 	}
 	if p, ok := prealloc.(tensor.Tensor); ok {
-		op.do(p, in, pooled, pooledGrad)
-		return prealloc, nil
+		err = op.do(p, in, pooled, pooledGrad)
+		return prealloc, err
 	}
 	return nil, errors.Errorf("Cannot do with PreallocDo - expected PreAlloc to be tensor")
 }
@@ -1040,7 +1040,7 @@ func (op *maxPoolDiffOp) checkInput(inputs ...Value) (in, pooled, pooledGrad ten
 	return
 }
 
-func (op *maxPoolDiffOp) do(inGrad, in, pooled, pooledGrad tensor.Tensor) {
+func (op *maxPoolDiffOp) do(inGrad, in, pooled, pooledGrad tensor.Tensor) (err error) {
 	pooledShape := pooled.Shape()
 	pooledStride := op.strideValue(pooled.Strides())
 	inStride := in.Strides()[1]
@@ -1052,7 +1052,7 @@ func (op *maxPoolDiffOp) do(inGrad, in, pooled, pooledGrad tensor.Tensor) {
 	case tensor.Float32:
 		inGradData := inGrad.Data().([]float32)
 		pooledGradData := pooledGrad.Data().([]float32)
-		op.f32s(b, c, h, w,
+		err = op.f32s(b, c, h, w,
 			inStride, pooledStride, maskStride,
 			inGradData, pooledGradData, maskData)
 	case tensor.Float64:
@@ -1062,20 +1062,26 @@ func (op *maxPoolDiffOp) do(inGrad, in, pooled, pooledGrad tensor.Tensor) {
 			inStride, pooledStride, maskStride,
 			inGradData, pooledGradData, maskData)
 	}
+	return
 }
 
 // in is the "bottom", while out is the "top" (bottom being the unpooled, and top being the pooled)
 func (op *maxPoolDiffOp) f32s(batches, channels, pooledH, pooledW int,
 	inStride, outStride, maskStride int,
 	inDiffData, outDiffData []float32,
-	maskData []int) {
+	maskData []int) (err error) {
 
 	// zero out. let's hope go's optimizer is smart enought
-	for i := range outDiffData {
-		outDiffData[i] = 0
+	for i := range inDiffData {
+		inDiffData[i] = 0
 	}
 
 	// this loop can be goroutine'd
+	defer func() {
+		if r := recover(); r != nil {
+			err = errors.Errorf("%v", r)
+		}
+	}()
 	for b := 0; b < batches; b++ {
 		for c := 0; c < channels; c++ {
 			for ph := 0; ph < pooledH; ph++ {
@@ -1090,6 +1096,7 @@ func (op *maxPoolDiffOp) f32s(batches, channels, pooledH, pooledW int,
 			maskData = maskData[maskStride:]
 		}
 	}
+	return
 }
 
 // in is the "bottom", while out is the "top" (bottom being the unpooled, and top being the pooled)
@@ -1099,8 +1106,8 @@ func (op *maxPoolDiffOp) f64s(batches, channels, pooledH, pooledW int,
 	maskData []int) {
 
 	// zero out. let's hope go's optimizer is smart enought
-	for i := range outDiffData {
-		outDiffData[i] = 0
+	for i := range inDiffData {
+		inDiffData[i] = 0
 	}
 
 	// this loop can be goroutine'd
