@@ -1,10 +1,5 @@
 package gorgonia
 
-import (
-	"bytes"
-	"fmt"
-)
-
 // dataflow analysis
 
 type dataflow struct {
@@ -292,11 +287,11 @@ func (df *dataflow) buildIntervals(sorted Nodes) {
 		iv.fix()
 	}
 
-	var buf bytes.Buffer
-	for k, v := range intervals {
-		fmt.Fprintf(&buf, "%v: %v\n", k, v)
-	}
-	compileLogf("Intervals: %v", buf.String())
+	//var buf bytes.Buffer
+	//for k, v := range intervals {
+	//	fmt.Fprintf(&buf, "%v: %v\n", k, v)
+	//}
+	//compileLogf("Intervals: %v", buf.String())
 
 	df.intervals = intervals
 	return
